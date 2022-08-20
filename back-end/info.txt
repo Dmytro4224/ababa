@@ -1,0 +1,5 @@
+NestJS project: https://nestjs.com/
+==
+Environment installation 
+$ npm i -g @nestjs/cli
+
