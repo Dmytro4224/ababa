@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charSet="utf-8"/>
+    <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content"/>
+    <title>🎥 Movie API for Tomas from ABABA</title>
+    <style>
+        pre{
+            background-color:#dfe6ff;
+        }
+        div.method  {
+        background-color:#fff0ea;
+        padding:3px;
+        border-bottom:1px dashed #333;
+        margin-top:5px;
+        }
+        url {
+            color:green;
+            font-size:18px;
+            font-weight:700;
+        }
+        </style>
+    </head>
+<body>
+      Helcome to our super - puper - duper API🤩🤩🤩!<br />
+        <h3>ℹ️ About</h3>
+        <p>This document provides a brief description of api methods.</p>
+        <p>Methods are divided into 🔓<a href="#public-methods">public</a> and 🔒<a href="#private-methods">private</a>.</p>
+        <p>Private methods are only available with user credentials passed.</p>
+        <h3 id="public-methods">🔓 Public methods</h3>
+       <div class="method">
+        <h4>Create account</h4>
+        POST:<url class="method">/auth/signup</url> <br />
+        <strong>Request body</strong>:<br />
+        <pre>
+              {
+                    "login":"1",
+                    "pwd":"pwd",
+                    "name":"mikola"
+              }
+        </pre><br />
+        <strong>Responce</strong>:<br />
+        <pre>{
+    "statusCode": 200,
+    "data": {
+        "hash": "636b73f6-e457-496c-be46-7875047e12b5",
+        "name": "mikola",
+        "status": true,
+        "date": "2022-08-19T16:27:11.838Z"
+                }
+            }
+        </pre>
+    </div>
+<!--------------------------->
+<div class="method">
+        <h4>Get auth data (login)</h4>
+        POST:<url class="method">/auth/signin</url> <br />
+        <strong>Request body</strong>:<br />
+        <pre>
+                {
+                    "login":"1",
+                    "pwd":"pwd",
+                }
+        </pre><br />
+        <strong>Responce</strong>:<br />
+        <pre>{
+    "statusCode": 200,
+    "data": {
+        "sessionToken": "5d412dc2-786e-4b68-9276-63aab4460a9f",
+        "loginMessage": "sussess",
+        "name": "mikola",
+        "userToken": "9d6196f2-e667-4904-bd40-1fb27024094c"
+    }
+}
+        </pre>
+    <p><strong>Info.</strong>The <em>sessionToken</em> - session key is valid for 6 hours, without binding to the device.</p>
+    </div>
+<!--------------------------->
+<div class="method">
+        <h4>Log out</h4>
+        GET:<url class="method">/auth/signout/{sessionToken}/{userToken}</url> <br />
+      
+        <strong>Responce</strong>:<br />
+        <pre>{
+            "statusCode": 200,
+            "data": {
+                "isLogOut": true
+                    }
+                }
+</pre>
+    </div>
+        <h3  id="private-methods">🔒 Private methods</h3>
+        <div class="method">
+        <h4>Get uses movies list</h4>
+        GET:<url class="method">/u/:userSessionToken/:userHash</url> <br />
+      
+        <strong>Responce</strong>:<br />
+        <pre>{
+            "statusCode":200,
+                "data":
+                    [{
+                        "id":null,
+                        "hash":"640e7e06-45f7-4895-94cb-afbd6ae9910f",
+                        "ownerid":null,
+                        "name":"Молчание ягнят2",
+                        "description":"дуже файне кіно",
+                        "thumbnail":"",
+                        "preview":"",
+                        "status":true,
+                        "date":"2022-08-20T13:57:36.355Z"
+                    }]
+            }
+</pre>
+    </div>
+
+    <div class="method">
+        <h4>Add movie</h4>
+        POST:<url class="method">/u/:userSessionToken/:userHash</url> <br />
+        <strong>Request body</strong>:<br />
+        <pre>
+                {
+                    "name": "Молчание ягнят2",
+                    "description": "дуже осе кіно",
+                    "thumbnail": "https://....",
+                    "preview":"https://...."
+                }
+        </pre>
+        <p><strong>Info.</strong> description,thumbnail,preview: Nullable</p>
+        <br />
+        <strong>Responce</strong>:<br />
+        <pre>{
+            "statusCode":200,
+                "data":
+                    {
+                        "id":null,
+                        "hash":"640e7e06-45f7-4895-94cb-afbd6ae9910f",
+                        "ownerid":null,
+                        "name":"Молчание ягнят2",
+                        "description":"дуже фосе кіно",
+                        "thumbnail":"",
+                        "preview":"",
+                        "status":true,
+                        "date":"2022-08-20T13:57:36.355Z"
+                    }
+            }
+</pre>
+    </div>
+     <div class="method">
+        <h4>Get movie info</h4>
+        GET:<url class="method">/u/:userSessionToken/:userHash/movie/:movieHash</url> <br />
+      
+        <strong>Responce</strong>:<br />
+        <pre>{
+            "statusCode":200,
+                "data":
+                    {
+                        "id":null,
+                        "hash":"640e7e06-45f7-4895-94cb-afbd6ae9910f",
+                        "ownerid":null,
+                        "name":"Молчание ягнят2",
+                        "description":"дуже файне кіно",
+                        "thumbnail":"",
+                        "preview":"",
+                        "status":true,
+                        "date":"2022-08-20T13:57:36.355Z"
+                    }
+            }
+</pre>
+    </div>
+      <div class="method">
+        <h4>Delete movie</h4>
+        DELETE:<url class="method">/u/:userSessionToken/:userHash/movie/:movieHash</url> <br />
+      
+        <strong>Responce</strong>:<br />
+        <pre>{
+                "statusCode": 403,
+                "data": {
+                    "isRemoved": true
+                }
+            }
+</pre>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+      
