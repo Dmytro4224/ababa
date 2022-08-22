@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="ABABA Movie list." />
+    <meta name="author" content="© 2022 Redmonkey" />
+    <title>ABABA Movie list</title>
+    <link href="./css/nes.min.css" rel="stylesheet" />
+    <link href="./css/theme.css" rel="stylesheet" />
+    </head>
+    <body class="full-bg">
+        <div id="nescss">
+            <div class="container">
+                <section class="showcase"><section class="nes-container with-title">
+                    <h3 class="title">🎥 Add movie to list</h3> 
+                 <div id="inputs" class="item">
+                    <div class="nes-field">
+                        <label for="name_field">Movie name</label>
+                        <input type="text" class="nes-input" maxlength="50">
+                  </div>
+                  <div class="nes-field">
+                    <label for="name_field">Short description</label>
+                    <textarea class="nes-input"  maxlength="256">
+
+                    </textarea>
+              </div>
+              <div class="nes-field">
+                <label for="name_field">Thumb image url</label>
+                <input type="text" class="nes-input" maxlength="512">
+          </div>
+          <div class="nes-field">
+            <label for="name_field">Youtube preview url</label>
+            <input type="text" class="nes-input" maxlength="512" placeholder="https://www.youtube.com/watch?v=???">
+      </div>
+                 
+                  <div class="nes-field">
+                    <center>
+                      <button onclick="window.location='cabinet.html'" type="button" class="nes-btn">Cancel ❌</button>
+                      <button onclick="window.location='cabinet.html'" type="button" class="nes-btn is-success">Save 💾</button>
+                </center>
+                  </div>
+                </div>
+        </div>
+    </body>
+</html>
