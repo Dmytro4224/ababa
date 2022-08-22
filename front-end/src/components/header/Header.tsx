@@ -1,18 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { signout } from '../../redux/slices/authSlice';
+import { useSignoutMutation } from '../../redux/api/authApi';
+
 
 export interface IHeader {
 }
 
 export const Header = ({ }: IHeader) => {
-  const { isAuth } = useAppSelector(state => state.auth);
-  const dispatch = useAppDispatch();
+  const { isAuth, sessionToken, userToken } = useAppSelector(state => state.auth);
+
+  const [signout, { }] = useSignoutMutation();
 
   const signOut = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
-    dispatch(signout());
+    signout({ sessionToken, userToken });
   }
 
   return (

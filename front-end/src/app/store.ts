@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { authApi } from '../redux/api/authApi';
 import authReducer from '../redux/slices/authSlice';
 import moviesReducer from '../redux/slices/moviesSlice';
 
 export const store = configureStore({
   reducer: {
+    [authApi.reducerPath]: authApi.reducer,
     auth: authReducer,
     movies: moviesReducer
   }

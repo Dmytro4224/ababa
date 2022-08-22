@@ -1,23 +1,26 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ILoginResponse } from '../../redux/api/authApi';
 
 interface ILogin {
-  onLogin: (data: IFormData) => void;
+  onLogin: (data: ILoginFormData) => void;
+  isSubmiting: boolean;
+  submitedData: ILoginResponse | undefined;
 }
 
-export interface IFormData {
+export interface ILoginFormData {
   login: string;
   password: string;
   rememberMe: boolean
 }
 
-const initialState: IFormData = {
+const initialState: ILoginFormData = {
   login: '',
   password: '',
   rememberMe: true
 }
 
-export const Login = ({ onLogin }: ILogin) => {
+export const LoginView = ({ onLogin, isSubmiting, submitedData }: ILogin) => {
 
   const [formData, setFormData] = useState(initialState);
 

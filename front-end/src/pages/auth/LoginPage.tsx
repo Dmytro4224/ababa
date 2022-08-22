@@ -1,29 +1,26 @@
-import api  from '../../api/api'
-import { useAppDispatch } from '../../app/hooks';
-import { IFormData, Login } from '../../components/auth/Login'
-import { signin } from '../../redux/slices/authSlice';
+import { ILoginFormData, LoginView } from '../../components/auth/LoginView';
+import { useSigninMutation } from '../../redux/api/authApi';
 
 export interface ILoginPage {
 }
 
 export const LoginPage = ({ }: ILoginPage) => {
 
-  const dispatch = useAppDispatch();
+  const [signin, { isLoading: isSubmiting, data }] = useSigninMutation();
 
-  const authUser = (data: IFormData) => {
-    api.auth.login({
+  const authUser = (data: ILoginFormData) => {
+    signin({
       login: data.login,
-      password: data.password
-    })
-      .then(response => {
-        dispatch(signin(response));
-      });
+      pwd: data.password
+    });
   }
 
   return (
     <div>
-      <Login
+      <LoginView
         onLogin={authUser}
+        isSubmiting={isSubmiting}
+        submitedData={data}
       />
     </div>
   )

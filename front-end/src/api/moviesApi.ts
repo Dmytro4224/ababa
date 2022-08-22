@@ -1,7 +1,7 @@
-import { request } from 'https';
 import { fetchData } from '../app/fetch'
 import { sleep } from '../helpers/misc';
-import { IBaseResponse } from './api';
+import { IBaseResponse } from '../redux/api';
+ 
 
 export interface IMovie {
   id: number;

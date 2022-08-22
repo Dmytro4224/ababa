@@ -3,7 +3,6 @@ import { Link, Navigate, useLocation, useOutlet } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getToken } from '../../app/useAuth';
 import { validateToken } from '../../redux/slices/authSlice';
- 
 
 export interface ICabinetPage {
 }

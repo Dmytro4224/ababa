@@ -1,8 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { IRegisterResponse } from '../../redux/api/authApi';
 
 interface IRegisterView {
   onRegister: (data: IRegisterFormData) => void;
+  isSubmiting: boolean;
+  submitedData: IRegisterResponse | undefined;
 }
 
 export interface IRegisterFormData {
@@ -19,7 +22,7 @@ const initialState: IRegisterFormData = {
   lastName: ''
 }
 
-export const RegisterView = ({ onRegister }: IRegisterView) => {
+export const RegisterView = ({ onRegister, isSubmiting, submitedData }: IRegisterView) => {
 
   const [formData, setFormData] = useState(initialState);
 
