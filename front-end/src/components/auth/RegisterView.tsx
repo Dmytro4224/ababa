@@ -1,6 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IRegisterResponse } from '../../redux/api/authApi';
+import styles from '../../styles/section.module.css';
+import formStyles from '../../styles/form.module.css';
+import { cls } from '../../helpers/misc';
+import { goToLoginPage } from '../../app/navigations';
 
 interface IRegisterView {
   onRegister: (data: IRegisterFormData) => void;
@@ -9,22 +13,23 @@ interface IRegisterView {
 }
 
 export interface IRegisterFormData {
-  email: string;
+  login: string;
   password: string;
-  firstName: string;
+  name: string;
   lastName: string;
 }
 
 const initialState: IRegisterFormData = {
-  email: '',
+  login: '',
   password: '',
-  firstName: '',
+  name: '',
   lastName: ''
 }
 
 export const RegisterView = ({ onRegister, isSubmiting, submitedData }: IRegisterView) => {
-
+  console.log('isSubmiting', isSubmiting);
   const [formData, setFormData] = useState(initialState);
+  const navigate = useNavigate();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,66 +42,65 @@ export const RegisterView = ({ onRegister, isSubmiting, submitedData }: IRegiste
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const firstNameRef = useRef<HTMLInputElement>(null);
-  const lastNameRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
 
   return (
-    <form className="login" onSubmit={onSubmit}>
-      <div className="mb-4">
-        <label className="form-label" htmlFor="registerEmail">Email address</label>
-        <input
-          type="email"
-          id="registerEmail"
-          className="form-control"
-          ref={emailRef}
-          value={formData.email}
-          onChange={onInputChange('email')}
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="form-label" htmlFor="registerPassword">Password</label>
-        <input
-          type="password"
-          id="registerPassword"
-          className="form-control"
-          ref={passwordRef}
-          value={formData.password}
-          onChange={onInputChange('password')}
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="form-label" htmlFor="registerFirstName">First Name</label>
-        <input
-          type="text"
-          id="registerFirstName"
-          className="form-control"
-          ref={firstNameRef}
-          value={formData.firstName}
-          onChange={onInputChange('firstName')}
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="form-label" htmlFor="registerFirstLast">Last Name</label>
-        <input
-          type="text"
-          id="registerFirstLast"
-          className="form-control"
-          ref={lastNameRef}
-          value={formData.lastName}
-          onChange={onInputChange('lastName')}
-        />
-      </div>
-
-      <button type="submit" className="btn btn-primary btn-block mb-4">
-        Register
-      </button>
-
-      <div className="text-center">
-        <p>Already a member? <Link to="/login">Sign in</Link></p>
-      </div>
-    </form>
+    <section className={styles.section}>
+      <h3 className={styles.sectionTitle}>Create account</h3>
+      <form onSubmit={onSubmit}>
+        <div className={formStyles.field}>
+          <label className={formStyles.label} htmlFor="registerName">Your name</label>
+          <input
+            type="text"
+            id="registerName"
+            className={formStyles.input}
+            maxLength={50}
+            ref={nameRef}
+            value={formData.name}
+            onChange={onInputChange('name')}
+          />
+        </div>
+        <div className={formStyles.field}>
+          <label className={formStyles.label} htmlFor="registerLogin">Your login</label>
+          <input
+            type="text"
+            id="registerLogin"
+            className={formStyles.input}
+            maxLength={50}
+            ref={emailRef}
+            value={formData.login}
+            onChange={onInputChange('login')}
+          />
+        </div>
+        <div className={formStyles.field}>
+          <label className={formStyles.label} htmlFor="registerPassword">Your password</label>
+          <input
+            type="password"
+            id="registerPassword"
+            className={formStyles.input}
+            ref={passwordRef}
+            value={formData.password}
+            onChange={onInputChange('password')}
+          />
+        </div>
+        <div className={cls(formStyles.field, 'ta-c')}>
+          <button
+            type="button"
+            className={cls(formStyles.btn)}
+            onClick={goToLoginPage(navigate)}
+          >
+            Cancel
+          </button>
+          &nbsp;
+          <button
+            type="submit"
+            className={cls(formStyles.btn, formStyles.btnSuccess)}
+            disabled={isSubmiting}
+          >
+            Create account »
+          </button>
+        </div>
+      </form>
+    </section>
   )
 }

@@ -1,28 +1,45 @@
+import { useFullBg } from '../../app/useBodyClass';
 import { IRegisterFormData, RegisterView } from '../../components/auth/RegisterView';
-import { useSignupMutation } from '../../redux/api/authApi';
+import { digestMessage } from '../../helpers/misc';
+import { useSigninMutation, useSignupMutation } from '../../redux/api/authApi';
 
 export interface IRegisterPage {
 }
 
 export const RegisterPage = ({ }: IRegisterPage) => {
 
-  const [signup, { isLoading, data }] = useSignupMutation();
+  useFullBg();
 
-  const onRegister = (data: IRegisterFormData) => {
-    console.log('register data', data);
+  const [signup, { isLoading, data }] = useSignupMutation();
+  const [signin, { }] = useSigninMutation();
+
+  const onRegister = async (form: IRegisterFormData) => {
+    const pwdHash = await digestMessage(form.password);
     signup({
-      login: data.email,
-      pwd: data.password,
-      name: data.firstName
-    });
+      login: form.login,
+      pwd: pwdHash,
+      name: form.name
+    })
+      .unwrap()
+      .then(response => {
+        if (response.statusCode === 200) {
+          signin({
+            login: form.login,
+            pwd: pwdHash
+          });
+        }
+      })
+      .catch(ex => {
+        console.error(ex);
+      });
   }
   return (
-    <div>
+    <>
       <RegisterView
         onRegister={onRegister}
         isSubmiting={isLoading}
         submitedData={data}
       />
-    </div>
+    </>
   )
 }

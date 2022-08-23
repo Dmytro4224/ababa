@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
-import { IMovie } from '../../api/moviesApi';
+import { IMovie } from '../../app/dataTypes';
+import cabinetStyles from '../../styles/cabinet.module.css';
+import formStyles from '../../styles/form.module.css';
 
 export interface IMovieListItem {
   movie: IMovie;
@@ -8,15 +10,15 @@ export interface IMovieListItem {
 export const MovieListItem = ({ movie }: IMovieListItem) => {
 
   return (
-    <div>
+    <div className={cabinetStyles.moviesItem}>
       <h2>
         {movie.name}
       </h2>
       <p>
-        {movie.title}
+        {movie.description}
       </p>
       <div>
-        <Link to={`/u/movies/${movie.id}`}>Detail</Link>
+        <Link to={`/u/movie/${movie.hash}`}>Detail</Link>
       </div>
     </div>
   )

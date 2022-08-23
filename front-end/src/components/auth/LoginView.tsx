@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ILoginResponse } from '../../redux/api/authApi';
+import styles from '../../styles/section.module.css';
+import formStyles from '../../styles/form.module.css';
 
 interface ILogin {
   onLogin: (data: ILoginFormData) => void;
@@ -11,18 +13,17 @@ interface ILogin {
 export interface ILoginFormData {
   login: string;
   password: string;
-  rememberMe: boolean
 }
 
 const initialState: ILoginFormData = {
   login: '',
-  password: '',
-  rememberMe: true
+  password: ''
 }
 
 export const LoginView = ({ onLogin, isSubmiting, submitedData }: ILogin) => {
 
   const [formData, setFormData] = useState(initialState);
+  const navigate = useNavigate();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,68 +32,57 @@ export const LoginView = ({ onLogin, isSubmiting, submitedData }: ILogin) => {
     onLogin({ ...formData });
   }
 
-  const onLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, login: e.target.value });
+  const goToRegister = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    navigate('/register');
   }
 
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, password: e.target.value });
-  }
-
-  const onRememberMeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, rememberMe: e.target.checked });
-  }
+  const onInputChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, [name]: e.target.value });
 
   const loginRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
   return (
-    <form className="login" onSubmit={onSubmit}>
-      <div className="mb-4">
-        <label className="form-label" htmlFor="authEmail">Email address</label>
-        <input
-          type="text"
-          id="authEmail"
-          className="form-control"
-          ref={loginRef}
-          value={formData.login}
-          onChange={onLoginChange}
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="form-label" htmlFor="authPassword">Password</label>
-        <input
-          type="password"
-          id="authPassword"
-          className="form-control"
-          ref={passwordRef}
-          value={formData.password}
-          onChange={onPasswordChange}
-        />
-      </div>
-
-      <div className="mb-4">
-        <div className="form-check">
+    <section className={styles.section}>
+      <h3 className={styles.sectionTitle}>Sign In</h3>
+      <form onSubmit={onSubmit}>
+        <div className={formStyles.field}>
+          <label className={formStyles.label} htmlFor="authLogin">Your login</label>
           <input
-            type="checkbox"
-            className="form-check-input"
-            value=""
-            id="authRememberMe"
-            checked={formData.rememberMe}
-            onChange={onRememberMeChange}
+            type="text"
+            id="authLogin"
+            className={formStyles.input}
+            ref={loginRef}
+            value={formData.login}
+            onChange={onInputChange('login')}
           />
-          <label className="form-check-label" htmlFor="authRememberMe">Remember me</label>
         </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary btn-block mb-4">
-        Sign in
-      </button>
-
-      <div className="text-center">
-        <p>Not a member? <Link to="/register">Register</Link></p>
-      </div>
-    </form>
+        <div className={formStyles.field}>
+          <label className={formStyles.label} htmlFor="authPassword">Your password</label>
+          <input
+            type="password"
+            id="authPassword"
+            className={formStyles.input}
+            ref={passwordRef}
+            value={formData.password}
+            onChange={onInputChange('password')}
+          />
+        </div>
+        <div className={`${formStyles.field} ta-c`}>
+          <button type="submit" className={`${formStyles.btn} ${formStyles.btnPrimary}`}>
+            Login
+          </button>
+          <br />
+          or
+          <br />
+          <button
+            type="button"
+            className={`${formStyles.btn} ${formStyles.btnRed}`}
+            onClick={goToRegister}
+          >
+            Create account »
+          </button>
+        </div>
+      </form>
+    </section>
   )
 }

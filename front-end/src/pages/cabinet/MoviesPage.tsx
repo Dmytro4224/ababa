@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { MoviesList } from '../../components/cabinet/MoviesList';
-import { catalog } from '../../redux/slices/moviesSlice';
+import { useMoviesMutation } from '../../redux/api/moviesApi';
+import { selectToken } from '../../redux/slices/authSlice';
 
 export interface IMoviesPage {
 }
 
 export const MoviesPage = ({ }: IMoviesPage) => {
 
-  const movies = useAppSelector(state => state.movies.short);
-  const dispatch = useAppDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const movies = useAppSelector(state => state.movies.items);
+  const token = useAppSelector(selectToken);
+  const [load, { isLoading }] = useMoviesMutation();
 
   useEffect(() => {
-    
+    if (movies.length === 0) {
+      load({ token });
+    }
   }, []);
 
   if (isLoading) {

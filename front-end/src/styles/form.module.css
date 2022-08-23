@@ -1,0 +1,180 @@
+
+.field {
+  margin-bottom: 1.5rem;
+}
+.field:last-child {
+  margin-bottom: .5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: .5rem;
+  cursor: inherit;
+}
+
+.input {
+  display: block;
+  border-image-slice: 2;
+  border-image-width: 2;
+  border-image-repeat: space;
+  border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(33,37,41)" /></svg>');
+  border-image-outset: 2;
+  width: calc(100% - 8px);
+  padding: .5rem 1rem;
+  margin: 4px;
+  background-clip: padding-box;
+  border-style: solid;
+  border-width: 4px;
+  overflow: visible;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.btn {
+  border-image-slice: 2;
+  border-image-width: 2;
+  border-image-repeat: stretch;
+  border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(33,37,41)" /></svg>');
+  border-image-outset: 2;
+  position: relative;
+  display: inline-block;
+  padding: 6px 8px;
+  margin: 4px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAzElEQVRYR+2X0Q6AIAhF5f8/2jYXZkwEjNSVvVUjDpcrGgT7FUkI2D9xRfQETwNIiWO85wfINfQUEyxBG2ArsLwC0jioGt5zFcwF4OYDPi/mBYKm4t0U8ATgRm3ThFoAqkhNgWkA0jJLvaOVSs7j3qMnSgXWBMiWPXe94QqMBMBc1VZIvaTu5u5pQewq0EqNZvIEMCmxAawK0DNkay9QmfFNAJUXfgGgUkLaE7j/h8fnASkxHTz0DGIBMCnBeeM7AArpUd3mz2x3C7wADglA8BcWMZhZAAAAAElFTkSuQmCC) 14 0,pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #212529;
+  background-color: #fff;
+  border-style: solid;
+  border-width: 4px;
+}
+  .btn::after {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    content: "";
+    box-shadow: inset -4px -4px #adafbc;
+  }
+  .btn:hover {
+    color: #212529;
+    text-decoration: none;
+    background-color: #e7e7e7;
+  }
+    .btn:hover::after {
+      box-shadow: inset -6px -6px #adafbc;
+    }
+  .btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 6px rgb(173 175 188 / 30%);
+  }
+  .btn:active:not(.is-disabled)::after {
+    box-shadow: inset 4px 4px #adafbc;
+  }
+
+@media (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+  .btn {
+    border-image-repeat: space;
+  }
+}
+
+.btnRed {
+  color: #fff;
+  background-color: #e76e55;
+}
+  .btnRed::after {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    content: "";
+    box-shadow: inset -4px -4px #8c2022;
+  }
+  .btnRed:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #ce372b;
+  }
+    .btnRed:hover::after {
+      box-shadow: inset -6px -6px #8c2022;
+    }
+  .btnRed:focus {
+    box-shadow: 0 0 0 6px rgb(140 32 34 / 30%);
+  }
+  .btnRed:active:not(.isdisabled)::after {
+    box-shadow: inset 4px 4px #8c2022;
+  }
+
+.btnPrimary {
+  color: #fff;
+  background-color: #209cee;
+}
+  .btnPrimary::after {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    content: "";
+    box-shadow: inset -4px -4px #006bb3;
+  }
+  .btnPrimary:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #108de0;
+  }
+    .btnPrimary:hover::after {
+      box-shadow: inset -6px -6px #006bb3;
+    }
+  .btnPrimary:focus {
+    box-shadow: 0 0 0 6px rgba(0,107,179,.3);
+  }
+  .btnPrimary:active:not(.isdisabled)::after {
+    box-shadow: inset 4px 4px #006bb3;
+  }
+
+.btnSuccess {
+  color: #fff;
+  background-color: #92cc41;
+}
+  .btnSuccess::after {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    content: "";
+    box-shadow: inset -4px -4px #4aa52e;
+  }
+  .btnSuccess:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #76c442;
+  }
+    .btnSuccess:hover::after {
+      box-shadow: inset -6px -6px #4aa52e;
+    }
+  .btnSuccess:focus {
+    box-shadow: 0 0 0 6px rgba(74,165,46,.3);
+  }
+  .btnSuccess:active:not(.isdisabled)::after {
+    box-shadow: inset 4px 4px #4aa52e;
+  }
+
+.btn[disabled],
+.btn[disabled],
+.btn[disabled]:focus,
+.btn[disabled]:hover {
+  color: #212529;
+  cursor: not-allowed;
+  background-color: #d3d3d3;
+  box-shadow: inset -4px -4px #adafbc;
+  opacity: .6;
+}

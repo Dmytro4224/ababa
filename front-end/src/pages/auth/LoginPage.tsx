@@ -1,3 +1,4 @@
+import { useFullBg } from '../../app/useBodyClass';
 import { ILoginFormData, LoginView } from '../../components/auth/LoginView';
 import { useSigninMutation } from '../../redux/api/authApi';
 
@@ -5,6 +6,8 @@ export interface ILoginPage {
 }
 
 export const LoginPage = ({ }: ILoginPage) => {
+
+  useFullBg();
 
   const [signin, { isLoading: isSubmiting, data }] = useSigninMutation();
 
@@ -16,12 +19,12 @@ export const LoginPage = ({ }: ILoginPage) => {
   }
 
   return (
-    <div>
+    <>
       <LoginView
         onLogin={authUser}
         isSubmiting={isSubmiting}
         submitedData={data}
       />
-    </div>
+    </>
   )
 }

@@ -1,17 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IBaseResponse } from '.';
-
-type guid = string;
-
-/** 2022-08-19T16:27:11.838Z */
-type date = string;
+import { IApiResponse } from '.';
+import { date, guid } from '../../app/dataTypes';
+import { appSettings } from '../../app/settings';
  
-
 export interface ILoginRequest {
   login: string;
   pwd: string;
 }
-export interface ILoginResponse extends IBaseResponse<{
+export interface ILoginResponse extends IApiResponse<{
   sessionToken: guid;
   loginMessage: string;
   name: string;
@@ -23,7 +19,7 @@ export interface IRegisterRequest {
   pwd: string;
   name: string;
 }
-export interface IRegisterResponse extends IBaseResponse<{
+export interface IRegisterResponse extends IApiResponse<{
   hash: guid;
   name: string;
   status: boolean;
@@ -34,21 +30,18 @@ export interface ISignoutRequest {
   sessionToken: string | null;
   userToken: string | null;
 }
-export interface ISignoutResponse extends IBaseResponse<{
+export interface ISignoutResponse extends IApiResponse<{
   isLogOut: boolean;
 }> { }
 
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000',
+    baseUrl: appSettings.apiEndpoint,
     prepareHeaders: (headers, { getState }) => {
-      //const token = (getState() as RootState).auth.token
-      //if (token) {
-      //  headers.set('authorization', `Bearer ${token}`)
-      //}
+      headers.set('content-type', 'application/json; charset=utf-8');
       return headers;
-    },
+    }
   }),
   endpoints: (builder) => ({
     signin: builder.mutation<ILoginResponse, ILoginRequest>({
@@ -69,6 +62,6 @@ export const authApi = createApi({
       query: body => `/auth/signout/${body.sessionToken}/${body.userToken}`
     })
   }),
-})
+});
 
 export const { useSigninMutation, useSignupMutation, useSignoutMutation } = authApi;

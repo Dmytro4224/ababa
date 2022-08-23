@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
+import { guid } from '../../app/dataTypes';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { detail, findDetailMovie } from '../../redux/slices/moviesSlice';
+import { useGetMutation } from '../../redux/api/moviesApi';
+import { selectToken } from '../../redux/slices/authSlice';
+import { selectMovie } from '../../redux/slices/moviesSlice';
 
 export interface IMovieDetailPage {
 }
@@ -9,14 +12,14 @@ export interface IMovieDetailPage {
 export const MovieDetailPage = ({ }: IMovieDetailPage) => {
   
   const params = useParams();
-  const movieId = Number(params.id);
+  const movieHash = params.movieHash as guid;
 
-  const movie = useAppSelector(findDetailMovie(movieId));
-  const dispatch = useAppDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const token = useAppSelector(selectToken);
+  const movie = useAppSelector(selectMovie(movieHash));
+  const [load, { isLoading }] = useGetMutation();
 
   useEffect(() => {
-    
+    load({ token, data: { movieHash } });
   }, []);
 
   if (isLoading) {
@@ -42,10 +45,13 @@ export const MovieDetailPage = ({ }: IMovieDetailPage) => {
           {movie.name}
         </h1>
         <p>
-          {movie.title}
+          {movie.description}
         </p>
         <p>
-          {movie.description}
+          {movie.thumbnail}
+        </p>
+        <p>
+          {movie.preview}
         </p>
       </div>
     </div>

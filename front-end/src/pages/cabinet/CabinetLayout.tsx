@@ -11,13 +11,12 @@ export const CabinetLayout = ({}: ICabinetPage) => {
   const { isAuth } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const token = getToken();
 
   const outlet = useOutlet();
 
   useEffect(() => {
-    console.log('CabinetLayout', isAuth);
     if (isAuth === null) {
+      const token = getToken();
       dispatch(validateToken(token));
     }
   }, []);
@@ -37,14 +36,8 @@ export const CabinetLayout = ({}: ICabinetPage) => {
   }
 
   return (
-    <div>
-      <nav>
-        <Link to="">Cabinet</Link>
-        <Link to="create">Create new</Link>
-        <Link to="movies">Movies</Link>
-        <Link to="movies/1">Detail</Link>
-      </nav>
+    <>
       {outlet}
-    </div>
+    </>
   )
 }

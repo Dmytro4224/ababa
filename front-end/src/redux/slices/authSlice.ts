@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
 import { IToken, removeToken, setToken } from '../../app/useAuth';
 import { authApi } from '../api/authApi';
 
@@ -6,6 +7,7 @@ export interface AuthState {
   isAuth: boolean | null;
   sessionToken: string | null;
   userToken: string | null;
+  userName: string | null;
   status: 'idle' | 'loading' | 'failed' | 'complete';
 };
 
@@ -13,6 +15,7 @@ const initialState: AuthState = {
   isAuth: null,
   sessionToken: null,
   userToken: null,
+  userName: null,
   status: 'idle',
 };
 
@@ -20,11 +23,11 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    validateToken: (state, { payload }: { payload: IToken | null }) => {
-      if (payload !== null) {
+    validateToken: (state, action: PayloadAction<IToken | null>) => {
+      if (action.payload !== null) {
         state.isAuth = true;
-        state.sessionToken = payload.sessionToken;
-        state.userToken = payload.userToken;
+        state.sessionToken = action.payload.sessionToken;
+        state.userToken = action.payload.userToken;
       }
     }
   },
@@ -36,6 +39,7 @@ export const authSlice = createSlice({
           state.isAuth = isAuth;
           state.sessionToken = isAuth ? action.payload.data.sessionToken : null;
           state.userToken = isAuth ? action.payload.data.userToken : null;
+          state.userName = isAuth ? action.payload.data.name : null;
           if (isAuth) {
             setToken(action.payload.data.sessionToken, action.payload.data.userToken);
           }
@@ -44,7 +48,6 @@ export const authSlice = createSlice({
       .addMatcher(authApi.endpoints.signup.matchFulfilled,
         (state, action) => {
           const { statusCode, data } = action.payload;
-
         }
       )
       .addMatcher(authApi.endpoints.signout.matchFulfilled,
@@ -62,19 +65,13 @@ export const authSlice = createSlice({
 
 export const { validateToken } = authSlice.actions;
 
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
+export const selectToken = (state: RootState) => {
+  return {
+    sessionToken: state.auth.sessionToken!,
+    userToken: state.auth.userToken!
+  } as IToken
+}
 
-//export const isAuth = (state: RootState) => state.auth.token !== null;
-
-// We can also write thunks by hand, which may contain both sync and async logic.
-// Here's an example of conditionally dispatching actions based on current state.
-//export const incrementIfOdd = (amount: number): AppThunk => (dispatch, getState) => {
-//    const currentValue = isAuth(getState());
-//    if (currentValue % 2 === 1) {
-//        dispatch(incrementByAmount(amount));
-//    }
-//};
+export const selectUserName = (state: RootState) => state.auth.userName;
 
 export default authSlice.reducer;

@@ -14,12 +14,12 @@ export const HomeLayout = ({ }: IHomeLayout) => {
   }
 
   return (
-    <div>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
-      </nav>
+    <div className="homeLayout">
+      {/*<nav>*/}
+      {/*  <Link to="/">Home</Link>*/}
+      {/*  <Link to="/login">Login</Link>*/}
+      {/*  <Link to="/register">Register</Link>*/}
+      {/*</nav>*/}
       {outlet}
     </div>
   )

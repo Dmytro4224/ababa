@@ -13,8 +13,8 @@ import { CreateMoviePage } from './pages/cabinet/AddMoviePage';
 
 function App() {
   return (
-    <div className="app">
-      <Header />
+    <div className="container">
+      {/*<Header />*/}
       <Routes>
         <Route element={<HomeLayout />}>
           <Route path="/" element={<HomePage />} />
@@ -24,8 +24,8 @@ function App() {
         <Route path="/u" element={<CabinetLayout />}>
           <Route path="" element={<CabinetPage />} />
           <Route path="movies" element={<MoviesPage />} />
-          <Route path="movies/:id" element={<MovieDetailPage />} />
-          <Route path="create" element={<CreateMoviePage />} />
+          <Route path="movie/:movieHash" element={<MovieDetailPage />} />
+          <Route path="add-movie" element={<CreateMoviePage />} />
         </Route>
       </Routes>
     </div>
