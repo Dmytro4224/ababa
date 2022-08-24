@@ -1,46 +1,59 @@
 import React, { useRef, useState } from 'react';
 import formStyles from '../../styles/form.module.css';
 import styles from '../../styles/section.module.css';
-import {cls} from "../../helpers/misc";
+import {cls, IFormData, toggleErrorClass} from "../../helpers/misc";
 import {goToMoviesList} from "../../app/navigations";
 import {useNavigate} from "react-router-dom";
+import {IAddMovieResponse} from "../../redux/api/moviesApi";
+import {useResponse} from "../../app/hooks";
+import {ILoginFormData} from "../auth/LoginView";
 
 export interface IAddNewMovieView {
   onAddNewMovie: (data: IAddNewMovieFormData) => void;
+  isSubmitting: boolean;
+  submittedData: IAddMovieResponse | undefined;
 }
 
-export interface IAddNewMovieFormData {
+export interface IAddNewMovieFormData extends IFormData {
   name: string;
   short: string;
   thumbImage: string;
   preview: string;
+  error: boolean;
 }
 
 const initialState: IAddNewMovieFormData = {
   name: '',
   short: '',
   thumbImage: '',
-  preview: ''
+  preview: '',
+  error: false,
+  invalidFields: []
 }
 
-export const AddNewMovieView = ({ onAddNewMovie }: IAddNewMovieView) => {
+export const AddNewMovieView = ({ onAddNewMovie, isSubmitting, submittedData }: IAddNewMovieView) => {
 
-  const [formData, setFormData] = useState(initialState);
+  const { formData, setInvalid, onInputChange, onInputFocus } = useResponse(initialState, submittedData);
+
+  const checkValidate = (formData: IAddNewMovieFormData) => {
+    setInvalid('name', formData.name.length !== 0)
+
+    return formData.invalidFields.length === 0;
+  }
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-
-    onAddNewMovie({ ...formData });
+    if(checkValidate(formData)){
+      onAddNewMovie({ ...formData });
+    }
   }
-
-  const onInputChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setFormData({ ...formData, [name]: e.target.value });
 
   return (
     <section className={styles.section}>
       <h3 className={styles.sectionTitle}>🎥&nbsp;Add movie to list</h3>
-      <form className="create-movie" onSubmit={onSubmit}>
-          <div className={formStyles.field}>
+      <form onSubmit={onSubmit}>
+          <div className={cls(formStyles.field, toggleErrorClass(formData.invalidFields,'name', formStyles.isErrorField ))}>
             <label className={formStyles.label} htmlFor="movieName">Movie name</label>
             <input
               type="text"
@@ -50,7 +63,9 @@ export const AddNewMovieView = ({ onAddNewMovie }: IAddNewMovieView) => {
               maxLength={50}
               value={formData.name}
               onChange={onInputChange('name')}
+              onFocus={onInputFocus('name')}
             />
+            <span className={formStyles.subText}>*Incorrect name</span>
           </div>
 
           <div className={formStyles.field}>
@@ -88,10 +103,12 @@ export const AddNewMovieView = ({ onAddNewMovie }: IAddNewMovieView) => {
               onChange={onInputChange('preview')}
             />
           </div>
-
+          <div className={cls(formStyles.field)}>
+            <div className={formStyles.alert}>{formData.error ? <span className={formStyles.subText}>*Error, please try again</span> : '' }</div>
+          </div>
           <div className={formStyles.buttonsWrap}>
             <button type="button" onClick={goToMoviesList(useNavigate())} className={cls(formStyles.btn)}>Cancel ❌</button>
-            <button type="submit" className={cls(formStyles.btn, formStyles.btnSuccess)}>
+            <button disabled={isSubmitting} type="submit" className={cls(formStyles.btn, formStyles.btnSuccess)}>
               Save&nbsp;💾
             </button>
           </div>

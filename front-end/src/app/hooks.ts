@@ -35,8 +35,8 @@ export const useResponse = <T extends IFormData>(initialState: T, submittedData:
     }
   }, [submittedData])
 
-  const onInputChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, [name]: e.target.value });
-  const onInputFocus = (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (name: string) => (e: React.ChangeEvent<any>) => setFormData({ ...formData, [name]: e.target.value });
+  const onInputFocus = (name: string) => (e: React.ChangeEvent<any>) => {
     setFormData({
       ...formData,
       error: false,

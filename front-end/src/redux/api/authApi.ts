@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IApiResponse } from '.';
 import { date, guid } from '../../app/dataTypes';
 import { appSettings } from '../../app/settings';
- 
+
 export interface ILoginRequest {
   login: string;
   pwd: string;

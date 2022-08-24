@@ -9,11 +9,9 @@ export interface ICreateMoviePage {
 export const CreateMoviePage = ({ }: ICreateMoviePage) => {
 
   const token = useAppSelector(selectToken);
-  const [save, { isError, isSuccess, isLoading, data }] = useAddMutation();
+  const [save, { isLoading: isSubmitting, data }] = useAddMutation();
 
   const onAddNewMovie = (data: IAddNewMovieFormData) => {
-    console.log('data', data);
-
     save({
       token: token,
       data: {
@@ -29,6 +27,8 @@ export const CreateMoviePage = ({ }: ICreateMoviePage) => {
     <div>
       <AddNewMovieView
         onAddNewMovie={onAddNewMovie}
+        isSubmitting={isSubmitting}
+        submittedData={data}
       />
     </div>
   )
