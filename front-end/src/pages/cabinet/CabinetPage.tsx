@@ -60,10 +60,10 @@ export const CabinetPage = ({ }: ICabinetPage) => {
       <div className={cabinetStyles.iconList}>
         <i className={cabinetStyles.iconMario} />
       </div>
-      <div className={cls(cabinetStyles.container, 'ta-c')}>
+      {movies.length === 0 && <div className={cls(cabinetStyles.container, 'ta-c')}>
         <p className={cabinetStyles.containerTitle}>ℹ️ Info</p>
         <p>😿 {userName}, list is empty. Do you vant <Link to="/u/add-movie">add new record</Link>?</p>
-      </div>
+      </div>}
 
       <MoviesList
         movies={movies}
