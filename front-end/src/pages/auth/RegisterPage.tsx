@@ -37,8 +37,8 @@ export const RegisterPage = ({ }: IRegisterPage) => {
     <>
       <RegisterView
         onRegister={onRegister}
-        isSubmiting={isLoading}
-        submitedData={data}
+        isSubmitting={isLoading}
+        submittedData={data}
       />
     </>
   )

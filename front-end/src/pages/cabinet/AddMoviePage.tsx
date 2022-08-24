@@ -27,7 +27,6 @@ export const CreateMoviePage = ({ }: ICreateMoviePage) => {
 
   return (
     <div>
-      <h2>CreateMoviePage</h2>
       <AddNewMovieView
         onAddNewMovie={onAddNewMovie}
       />

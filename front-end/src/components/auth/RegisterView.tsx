@@ -3,19 +3,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import { IRegisterResponse } from '../../redux/api/authApi';
 import styles from '../../styles/section.module.css';
 import formStyles from '../../styles/form.module.css';
-import { cls } from '../../helpers/misc';
+import {cls, IFormData, setInvalidField, toggleErrorClass} from '../../helpers/misc';
 import { goToLoginPage } from '../../app/navigations';
+import {useResponse} from "../../app/hooks";
 
 interface IRegisterView {
   onRegister: (data: IRegisterFormData) => void;
-  isSubmiting: boolean;
-  submitedData: IRegisterResponse | undefined;
+  isSubmitting: boolean;
+  submittedData: IRegisterResponse | undefined;
 }
 
-export interface IRegisterFormData {
+export interface IRegisterFormData extends IFormData{
   login: string;
   password: string;
   name: string;
+  error: boolean;
   lastName: string;
 }
 
@@ -23,65 +25,76 @@ const initialState: IRegisterFormData = {
   login: '',
   password: '',
   name: '',
-  lastName: ''
+  lastName: '',
+  error: false,
+  invalidFields: []
 }
 
-export const RegisterView = ({ onRegister, isSubmiting, submitedData }: IRegisterView) => {
-  console.log('isSubmiting', isSubmiting);
-  const [formData, setFormData] = useState(initialState);
+export const RegisterView = ({ onRegister, isSubmitting, submittedData }: IRegisterView) => {
+
+  const { formData, setInvalid, onInputChange, onInputFocus } = useResponse(initialState, submittedData);
   const navigate = useNavigate();
+
+  const checkValidate = (formData: IRegisterFormData) => {
+    setInvalid('name', formData.name.length !== 0);
+    setInvalid('login', formData.login.length !== 0);
+    setInvalid('password', formData.password.length !== 0);
+
+    return formData.invalidFields.length === 0;
+  }
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //validate
-    //loginRef.current?.classList.add('is-invalid');
-    onRegister({ ...formData });
+
+    if(checkValidate(formData)) {
+      onRegister({...formData});
+    }
   }
-
-  const onInputChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, [name]: e.target.value });
-
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const nameRef = useRef<HTMLInputElement>(null);
 
   return (
     <section className={styles.section}>
       <h3 className={styles.sectionTitle}>Create account</h3>
       <form onSubmit={onSubmit}>
-        <div className={formStyles.field}>
+        <div className={cls(formStyles.field, toggleErrorClass(formData.invalidFields,'name', formStyles.isErrorField ))}>
           <label className={formStyles.label} htmlFor="registerName">Your name</label>
           <input
             type="text"
             id="registerName"
             className={formStyles.input}
             maxLength={50}
-            ref={nameRef}
             value={formData.name}
             onChange={onInputChange('name')}
+            onFocus={onInputFocus('name')}
           />
+          <span className={formStyles.subText}>*Incorrect name</span>
         </div>
-        <div className={formStyles.field}>
+        <div className={cls(formStyles.field, toggleErrorClass(formData.invalidFields,'login', formStyles.isErrorField ))}>
           <label className={formStyles.label} htmlFor="registerLogin">Your login</label>
           <input
             type="text"
             id="registerLogin"
             className={formStyles.input}
             maxLength={50}
-            ref={emailRef}
             value={formData.login}
             onChange={onInputChange('login')}
+            onFocus={onInputFocus('login')}
           />
+          <span className={formStyles.subText}>*Incorrect login</span>
         </div>
-        <div className={formStyles.field}>
+        <div className={cls(formStyles.field, toggleErrorClass(formData.invalidFields,'password', formStyles.isErrorField ))}>
           <label className={formStyles.label} htmlFor="registerPassword">Your password</label>
           <input
             type="password"
             id="registerPassword"
             className={formStyles.input}
-            ref={passwordRef}
             value={formData.password}
             onChange={onInputChange('password')}
+            onFocus={onInputFocus('password')}
           />
+          <span className={formStyles.subText}>*Incorrect password</span>
+        </div>
+        <div className={cls(formStyles.field)}>
+          <div className={formStyles.alert}>{formData.error ? <span className={formStyles.subText}>*User already exist</span> : '' }</div>
         </div>
         <div className={cls(formStyles.field, 'ta-c')}>
           <button
@@ -95,7 +108,7 @@ export const RegisterView = ({ onRegister, isSubmiting, submitedData }: IRegiste
           <button
             type="submit"
             className={cls(formStyles.btn, formStyles.btnSuccess)}
-            disabled={isSubmiting}
+            disabled={isSubmitting}
           >
             Create account »
           </button>

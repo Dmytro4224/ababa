@@ -9,7 +9,7 @@ export const LoginPage = ({ }: ILoginPage) => {
 
   useFullBg();
 
-  const [signin, { isLoading: isSubmiting, data }] = useSigninMutation();
+  const [signin, { isLoading: isSubmitting, data }] = useSigninMutation();
 
   const authUser = (data: ILoginFormData) => {
     signin({
@@ -22,8 +22,8 @@ export const LoginPage = ({ }: ILoginPage) => {
     <>
       <LoginView
         onLogin={authUser}
-        isSubmiting={isSubmiting}
-        submitedData={data}
+        isSubmitting={isSubmitting}
+        submittedData={data}
       />
     </>
   )
