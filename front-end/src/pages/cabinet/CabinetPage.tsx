@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { goToAddMoviePage } from '../../app/navigations';
 import { useTopBg } from '../../app/useBodyClass';
@@ -23,10 +23,10 @@ export const CabinetPage = ({ }: ICabinetPage) => {
   const [loadMovies, { isLoading }] = useMoviesMutation();
   const userName = useAppSelector(selectUserName);
   const token = useAppSelector(selectToken);
-  const movies = useAppSelector(state => state.movies.items);
+  const movies = useAppSelector(state => state.movies);
 
   useEffect(() => {
-    if (movies.length === 0) {
+    if (movies.status === 'idle') {
       loadMovies({ token });
     }
   }, []);
@@ -60,13 +60,11 @@ export const CabinetPage = ({ }: ICabinetPage) => {
       <div className={cabinetStyles.iconList}>
         <i className={cabinetStyles.iconMario} />
       </div>
-      {movies.length === 0 && <div className={cls(cabinetStyles.container, 'ta-c')}>
-        <p className={cabinetStyles.containerTitle}>ℹ️ Info</p>
-        <p>😿 {userName}, list is empty. Do you vant <Link to="/u/add-movie">add new record</Link>?</p>
-      </div>}
 
       <MoviesList
-        movies={movies}
+        movies={movies.items}
+        isInit={movies.status === 'idle'}
+        isLoading={isLoading}
       />
     </section>
   )

@@ -3,27 +3,21 @@ import { Routes, Route } from 'react-router-dom';
 import { CabinetLayout } from './pages/cabinet/CabinetLayout';
 import { CabinetPage } from './pages/cabinet/CabinetPage';
 import { LoginPage } from './pages/auth/LoginPage';
-import { HomePage } from './pages/home/HomePage';
 import { RegisterPage } from './pages/auth/RegisterPage';
-import { MoviesPage } from './pages/cabinet/MoviesPage';
 import { MovieDetailPage } from './pages/cabinet/MovieDetailPage';
 import { HomeLayout } from './pages/home/HomeLayout';
-import { Header } from './components/header/Header';
 import { CreateMoviePage } from './pages/cabinet/AddMoviePage';
 
 function App() {
   return (
     <div className="container">
-      {/*<Header />*/}
       <Routes>
         <Route element={<HomeLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
         <Route path="/u" element={<CabinetLayout />}>
           <Route path="" element={<CabinetPage />} />
-          <Route path="movies" element={<MoviesPage />} />
           <Route path="movie/:movieHash" element={<MovieDetailPage />} />
           <Route path="add-movie" element={<CreateMoviePage />} />
         </Route>

@@ -51,17 +51,10 @@ export const authApi = createApi({
         body: JSON.stringify(body)
       }),
     }),
-    signup: builder.mutation<IRegisterResponse, IRegisterRequest>({
-      query: body => ({
-        url: '/auth/signup',
-        method: 'POST',
-        body: JSON.stringify(body)
-      })
-    }),
     signout: builder.mutation<ISignoutResponse, ISignoutRequest>({
       query: body => `/auth/signout/${body.sessionToken}/${body.userToken}`
     })
   }),
 });
 
-export const { useSigninMutation, useSignupMutation, useSignoutMutation } = authApi;
+export const { useSigninMutation, useSignoutMutation } = authApi;

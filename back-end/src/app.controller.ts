@@ -15,7 +15,7 @@ export class LoginModel {
 
 //----------------public methods-------------------//
 @Controller()
-/**реалізація публічних методів*/
+/**пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ*/
 export class AppController {
     /* readme buffer html */
     static readmeBuffer: string = '';
@@ -87,14 +87,14 @@ export class AppController {
 
 
 //----------------AuthGuard-------------------//
-/** моделька для зберігання кешу буферу сесій авторизації */
+/** пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 interface iAuthGuardAuthBuffer {
     checkDate: Date,
     isValid: boolean
 }
 
 /**
- * Перевірка, чи можна визивати приватні методи
+ * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
  * */
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -117,10 +117,10 @@ export class AuthGuard implements CanActivate {
         return loginStatus;
     }
 
-    /**словник для кешу сесій авторизації*/
+    /**пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ*/
     private authData: Object = new Object();
     /**
-     * Перевіряємо валідність пари ключ сесії+юзер
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ+пїЅпїЅпїЅпїЅ
      * @param userSessionToken
      * @param userHash
      */
@@ -164,7 +164,7 @@ export class AuthGuard implements CanActivate {
 
 
 //----------------private methods-------------------//
-/**Приватні методи */
+/**пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ */
 @Controller('u/:userSessionToken/:userHash')
 @UseGuards(AuthGuard)
 export class PrivateController  {
@@ -172,7 +172,7 @@ export class PrivateController  {
     ) {}
 
     /**
-     * Отримати список мовіків користувача userHash
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ userHash
      * @param userSessionToken
      * @param userHash
      */
@@ -287,16 +287,18 @@ export class PrivateController  {
 
         if (result.status) {
             return {
-                statusCode: 403,
+                statusCode: 200,
                 data: {
+                    movieHash,
                     isRemoved: !result.status
                 }
             };
         }
         else {
             return {
-                statusCode: 403,
+                statusCode: 200,
                 data: {
+                    movieHash,
                     isRemoved: !result.status
                 }
             };

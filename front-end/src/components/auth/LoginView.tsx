@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ILoginResponse } from '../../redux/api/authApi';
 import styles from '../../styles/section.module.css';
 import formStyles from '../../styles/form.module.css';
-import {cls, IFormData, setFormErrors, setInvalidField, toggleErrorClass} from "../../helpers/misc";
+import {cls, IFormData, toggleErrorClass} from "../../helpers/misc";
 import {useResponse} from "../../app/hooks";
 import {goToRegister} from "../../app/navigations";
 

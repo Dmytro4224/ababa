@@ -215,3 +215,22 @@
 .createMovie{
 
 }
+.btnLink{
+  border: none;
+  outline: none;
+  background: transparent;
+}
+.btnLink:after{
+  display: none;
+}
+.btnLink:hover, .btnLink:focus{
+  border: none;
+  outline: none;
+  background: transparent;
+}
+.btnLinkViolet{
+  color: blueviolet;
+}
+.btnLinkRed{
+  color: red;
+}

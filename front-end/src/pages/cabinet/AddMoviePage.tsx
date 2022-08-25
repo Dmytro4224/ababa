@@ -2,11 +2,14 @@ import { useAppSelector } from '../../app/hooks';
 import { AddNewMovieView, IAddNewMovieFormData } from '../../components/cabinet/AddNewMovie'
 import { useAddMutation } from '../../redux/api/moviesApi';
 import { selectToken } from '../../redux/slices/authSlice';
+import {useFullBg} from "../../app/useBodyClass";
 
 export interface ICreateMoviePage {
 }
 
 export const CreateMoviePage = ({ }: ICreateMoviePage) => {
+
+  useFullBg();
 
   const token = useAppSelector(selectToken);
   const [save, { isLoading: isSubmitting, data }] = useAddMutation();

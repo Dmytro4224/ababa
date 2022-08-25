@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Link, Navigate, useLocation, useOutlet } from 'react-router-dom';
+import { Navigate, useLocation, useOutlet } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getToken } from '../../app/useAuth';
 import { validateToken } from '../../redux/slices/authSlice';
+import {urls} from "../../app/navigations";
 
 export interface ICabinetPage {
 }
@@ -31,7 +32,7 @@ export const CabinetLayout = ({}: ICabinetPage) => {
 
   if (!isAuth) {
     return (
-      <Navigate to="/login" state={{ from: location }} />
+      <Navigate to={urls.login} state={{ from: location }} />
     )
   }
 

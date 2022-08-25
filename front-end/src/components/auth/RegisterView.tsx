@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IRegisterResponse } from '../../redux/api/authApi';
 import styles from '../../styles/section.module.css';
 import formStyles from '../../styles/form.module.css';
-import {cls, IFormData, setInvalidField, toggleErrorClass} from '../../helpers/misc';
+import {cls, IFormData, toggleErrorClass} from '../../helpers/misc';
 import { goToLoginPage } from '../../app/navigations';
 import {useResponse} from "../../app/hooks";
 
@@ -76,6 +76,7 @@ export const RegisterView = ({ onRegister, isSubmitting, submittedData }: IRegis
             className={formStyles.input}
             maxLength={50}
             value={formData.login}
+            autoComplete={'cc-name'}
             onChange={onInputChange('login')}
             onFocus={onInputFocus('login')}
           />
@@ -88,6 +89,7 @@ export const RegisterView = ({ onRegister, isSubmitting, submittedData }: IRegis
             id="registerPassword"
             className={formStyles.input}
             value={formData.password}
+            autoComplete={'cc-name'}
             onChange={onInputChange('password')}
             onFocus={onInputFocus('password')}
           />

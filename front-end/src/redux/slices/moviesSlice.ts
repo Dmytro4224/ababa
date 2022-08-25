@@ -25,32 +25,35 @@ export const moviesSlice = createSlice({
       .addMatcher(moviesApi.endpoints.movies.matchFulfilled,
         (state, action) => {
           for (const movie of action.payload.data) {
-            if (state.items.findIndex(x => x.id === movie.id) === -1) {
+            if (state.items.findIndex(x => x.hash === movie.hash) === -1) {
               state.items.push(movie);
             }
           }
+
+          state.status = 'complete';
         }
       )
       .addMatcher(moviesApi.endpoints.add.matchFulfilled,
         (state, action) => {
           const movie = action.payload.data;
-          if (state.items.findIndex(x => x.id === movie.id) === -1) {
+          if (state.items.findIndex(x => x.hash === movie.hash) === -1) {
             state.items.push(movie);
           }
         }
       )
       .addMatcher(moviesApi.endpoints.delete.matchFulfilled,
         (state, action) => {
-          //const index = state.items.findIndex(x => x.id === movie.id);
-          //if (index !== -1) {
-          //  state.items[index] = movie;
-          //}
+          const movieHash = action.payload.data.movieHash;
+          const index = state.items.findIndex(x => x.hash === movieHash);
+          if (index !== -1) {
+            state.items.splice(index, 1);
+          }
         }
       )
       .addMatcher(moviesApi.endpoints.get.matchFulfilled,
         (state, action) => {
           const movie = action.payload.data;
-          const index = state.items.findIndex(x => x.id === movie.id);
+          const index = state.items.findIndex(x => x.hash === movie.hash);
           if (index !== -1) {
             state.items[index] = movie;
           }

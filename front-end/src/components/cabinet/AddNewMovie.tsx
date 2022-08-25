@@ -1,12 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import formStyles from '../../styles/form.module.css';
 import styles from '../../styles/section.module.css';
 import {cls, IFormData, toggleErrorClass} from "../../helpers/misc";
-import {goToMoviesList} from "../../app/navigations";
-import {useNavigate} from "react-router-dom";
+import {goToMoviesList, urls} from "../../app/navigations";
+import {Navigate, useNavigate} from "react-router-dom";
 import {IAddMovieResponse} from "../../redux/api/moviesApi";
 import {useResponse} from "../../app/hooks";
-import {ILoginFormData} from "../auth/LoginView";
 
 export interface IAddNewMovieView {
   onAddNewMovie: (data: IAddNewMovieFormData) => void;
@@ -34,6 +33,11 @@ const initialState: IAddNewMovieFormData = {
 export const AddNewMovieView = ({ onAddNewMovie, isSubmitting, submittedData }: IAddNewMovieView) => {
 
   const { formData, setInvalid, onInputChange, onInputFocus } = useResponse(initialState, submittedData);
+  const navigate = useNavigate();
+
+  if(submittedData && submittedData.statusCode === 200){
+    return <Navigate to={urls.cabinet} state={{ from: submittedData.data.hash }} />
+  }
 
   const checkValidate = (formData: IAddNewMovieFormData) => {
     setInvalid('name', formData.name.length !== 0)
@@ -107,7 +111,7 @@ export const AddNewMovieView = ({ onAddNewMovie, isSubmitting, submittedData }: 
             <div className={formStyles.alert}>{formData.error ? <span className={formStyles.subText}>*Error, please try again</span> : '' }</div>
           </div>
           <div className={formStyles.buttonsWrap}>
-            <button type="button" onClick={goToMoviesList(useNavigate())} className={cls(formStyles.btn)}>Cancel ❌</button>
+            <button type="button" onClick={goToMoviesList(navigate)} className={cls(formStyles.btn)}>Cancel ❌</button>
             <button disabled={isSubmitting} type="submit" className={cls(formStyles.btn, formStyles.btnSuccess)}>
               Save&nbsp;💾
             </button>

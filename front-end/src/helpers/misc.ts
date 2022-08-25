@@ -20,23 +20,6 @@ export interface IFormData {
   invalidFields: Array<string>;
 }
 
-export const setInvalidField = <T extends IFormData>(formData: T, setFormData:  React.Dispatch<React.SetStateAction<T>>, name: string, isValid: boolean) => {
-  const invalids = formData.invalidFields;
-  const index = invalids.indexOf(name);
-  if(index !== -1){
-    invalids.splice(index, 1);
-  }
-
-  if(!isValid){
-    invalids.push(name);
-  }
-
-  setFormData({
-    ...formData,
-    invalidFields: invalids
-  })
-}
-
 export const setFormErrors = <T extends IFormData>(invalidFields: Array<string>,name: string, isValid: boolean) => {
   const invalids = invalidFields;
   const index = invalids.indexOf(name);
@@ -55,4 +38,18 @@ export const toggleErrorClass = (invalidFields: Array<string>, name: string, cla
   const index = invalidFields.indexOf(name);
 
   return index !== -1 ? className : '';
+}
+
+export const isNullOrEmpty = (value: any) => {
+  if(value === undefined) return true;
+  if(value === null) return true;
+  if(typeof value === 'string' && value.length === 0) return true;
+
+  return false;
+}
+
+export const setImage = (event: any, image: any) => {
+  if(event.target){
+    event.target.src = image;
+  }
 }

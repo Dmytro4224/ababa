@@ -18,6 +18,7 @@ export interface IDeleteMovieRequest extends IApiRequest<{
   movieHash: guid;
 }> { }
 export interface IDeleteMovieResponse extends IApiResponse<{
+  movieHash: guid;
   isRemoved: boolean;
 }> { }
 

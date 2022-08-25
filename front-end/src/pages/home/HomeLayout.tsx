@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Navigate, useOutlet } from 'react-router-dom';
+import { Navigate, useOutlet } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 
 interface IHomeLayout {
@@ -15,11 +15,6 @@ export const HomeLayout = ({ }: IHomeLayout) => {
 
   return (
     <div className="homeLayout">
-      {/*<nav>*/}
-      {/*  <Link to="/">Home</Link>*/}
-      {/*  <Link to="/login">Login</Link>*/}
-      {/*  <Link to="/register">Register</Link>*/}
-      {/*</nav>*/}
       {outlet}
     </div>
   )

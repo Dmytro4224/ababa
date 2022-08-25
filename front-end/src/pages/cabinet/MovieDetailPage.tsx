@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom'
 import { guid } from '../../app/dataTypes';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../app/hooks';
 import { useGetMutation } from '../../redux/api/moviesApi';
 import { selectToken } from '../../redux/slices/authSlice';
 import { selectMovie } from '../../redux/slices/moviesSlice';
+import {useTopBg} from "../../app/useBodyClass";
+import {MovieDetailView} from "../../components/cabinet/MovieDetail";
 
 export interface IMovieDetailPage {
 }
 
 export const MovieDetailPage = ({ }: IMovieDetailPage) => {
-  
+  useTopBg();
   const params = useParams();
   const movieHash = params.movieHash as guid;
 
@@ -39,21 +41,6 @@ export const MovieDetailPage = ({ }: IMovieDetailPage) => {
   }
 
   return (
-    <div>
-      <div>
-        <h1>
-          {movie.name}
-        </h1>
-        <p>
-          {movie.description}
-        </p>
-        <p>
-          {movie.thumbnail}
-        </p>
-        <p>
-          {movie.preview}
-        </p>
-      </div>
-    </div>
+    <MovieDetailView name={movie.name} thumb={movie.thumbnail} description={movie.description} preview={movie.preview}  />
   )
 }

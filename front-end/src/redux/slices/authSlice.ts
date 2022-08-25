@@ -28,6 +28,10 @@ export const authSlice = createSlice({
         state.isAuth = true;
         state.sessionToken = action.payload.sessionToken;
         state.userToken = action.payload.userToken;
+      }else{
+        state.isAuth = false;
+        state.sessionToken = null;
+        state.userToken = null;
       }
     }
   },
@@ -43,11 +47,6 @@ export const authSlice = createSlice({
           if (isAuth) {
             setToken(action.payload.data.sessionToken, action.payload.data.userToken);
           }
-        }
-      )
-      .addMatcher(authApi.endpoints.signup.matchFulfilled,
-        (state, action) => {
-          const { statusCode, data } = action.payload;
         }
       )
       .addMatcher(authApi.endpoints.signout.matchFulfilled,
